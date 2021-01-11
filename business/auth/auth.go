@@ -89,7 +89,7 @@ func New(algorithm string, lookup PublicKeyLookup, keys Keys) (*Auth, error) {
 	// validated to avoid a critical vulnerability:
 	// https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 	parser := jwt.Parser{
-		ValidMethods: []string{algorithm}
+		ValidMethods: []string{algorithm},
 	})
 
 	a := Auth{
