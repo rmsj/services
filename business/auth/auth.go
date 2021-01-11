@@ -3,8 +3,10 @@ package auth
 
 import (
 	"crypto/rsa"
+	"sync"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/pkg/errors"
 )
 
 // These are the expected values for Claims.Roles.
@@ -61,6 +63,7 @@ type PublicKeyLookup func(kid string) (*rsa.PublicKey, error)
 type Auth struct {
 	mu        sync.RWMutex
 	algorithm string
+	method    jwt.SigningMethod
 	keyFunc   func(t *jwt.Token) (interface{}, error) // do the public lookup
 	parser    *jwt.Parser
 	keys      Keys // private in memory key store - kid => privateKey
@@ -90,13 +93,13 @@ func New(algorithm string, lookup PublicKeyLookup, keys Keys) (*Auth, error) {
 	// https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 	parser := jwt.Parser{
 		ValidMethods: []string{algorithm},
-	})
+	}
 
 	a := Auth{
 		algorithm: algorithm,
-		method: method,
+		method:    method,
 		keyFunc:   keyFunc,
-		parser:    parser,
+		parser:    &parser,
 		keys:      keys,
 	}
 
