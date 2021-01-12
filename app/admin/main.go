@@ -101,7 +101,7 @@ func tokengen() {
 	// jti (JWT ID): Unique identifier; can be used to prevent the JWT from being replayed (allows a token to be used only once)
 	claims := struct {
 		jwt.StandardClaims
-		Authorized []string
+		Roles []string
 	}{
 		StandardClaims: jwt.StandardClaims{
 			Issuer:    "service project",
@@ -109,13 +109,13 @@ func tokengen() {
 			ExpiresAt: time.Now().Add(8760 * time.Hour).Unix(),
 			IssuedAt:  time.Now().Unix(),
 		},
-		Authorized: []string{"ADMIN"},
+		Roles: []string{"ADMIN"},
 	}
 
 	method := jwt.GetSigningMethod("RS256")
 	tkn := jwt.NewWithClaims(method, claims)
 	// Key ID
-	tkn.Header["kid"] = "jasdfjkhasd-asdfasdf-adsfgadsfg"
+	tkn.Header["kid"] = "54bb2165-71e1-41a6-af3e-7da4a0e1e2c1"
 
 	// sign the token with the private key
 	str, err := tkn.SignedString(privateKey)
