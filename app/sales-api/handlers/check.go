@@ -5,11 +5,14 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/jmoiron/sqlx"
+	"github.com/rmsj/services/foundation/database"
 	"github.com/rmsj/services/foundation/web"
 )
 
 type checkGroup struct {
 	build string
+	db    *sqlx.DB
 }
 
 // readiness checks if the database is ready and if not will return a 500 status.
@@ -30,10 +33,10 @@ func (cg checkGroup) readiness(ctx context.Context, w http.ResponseWriter, r *ht
 
 	status := "ok"
 	statusCode := http.StatusOK
-	// if err := database.StatusCheck(ctx, cg.db); err != nil {
-	// 	status = "db not ready"
-	// 	statusCode = http.StatusInternalServerError
-	// }
+	if err := database.StatusCheck(ctx, cg.db); err != nil {
+		status = "db not ready"
+		statusCode = http.StatusInternalServerError
+	}
 
 	health := struct {
 		Status string `json:"status"`
