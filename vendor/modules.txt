@@ -7,6 +7,9 @@ github.com/dgrijalva/jwt-go
 # github.com/dimfeld/httptreemux/v5 v5.2.2
 ## explicit
 github.com/dimfeld/httptreemux/v5
+# github.com/dimiro1/darwin v0.0.0-20191008194338-370f81775d3b
+## explicit
+github.com/dimiro1/darwin
 # github.com/go-playground/locales v0.13.0
 ## explicit
 github.com/go-playground/locales
@@ -15,6 +18,13 @@ github.com/go-playground/locales/en
 # github.com/go-playground/universal-translator v0.17.0
 ## explicit
 github.com/go-playground/universal-translator
+# github.com/google/go-cmp v0.5.4
+## explicit
+github.com/google/go-cmp/cmp
+github.com/google/go-cmp/cmp/internal/diff
+github.com/google/go-cmp/cmp/internal/flags
+github.com/google/go-cmp/cmp/internal/function
+github.com/google/go-cmp/cmp/internal/value
 # github.com/google/uuid v1.1.2
 ## explicit
 github.com/google/uuid
@@ -41,6 +51,10 @@ go.opentelemetry.io/otel/codes
 go.opentelemetry.io/otel/internal
 go.opentelemetry.io/otel/label
 go.opentelemetry.io/otel/trace
+# golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
+## explicit
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
 # google.golang.org/appengine v1.6.7
 ## explicit
 # gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127

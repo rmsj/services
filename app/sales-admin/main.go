@@ -12,6 +12,8 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/rmsj/services/business/data/schema"
+	"github.com/rmsj/services/foundation/database"
 )
 
 /*
@@ -22,7 +24,38 @@ openssl rsa -pubout -in private.pem -out public.pem
 */
 
 func main() {
-	tokengen()
+	//keygen()
+	//tokengen()
+	migrate()
+}
+
+func migrate() {
+	dbConfig := database.Config{
+		User:       "postgres",
+		Password:   "postgres",
+		Host:       "0.0.0.0",
+		Name:       "postgres",
+		DisableTLS: true,
+	}
+
+	db, err := database.Open(dbConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	if err := schema.Migrate(db); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("migrations complete")
+
+	if err := schema.Seed(db); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("seed data complete")
+
 }
 
 func keygen() {

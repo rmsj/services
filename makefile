@@ -56,7 +56,7 @@ run:
 	go run app/sales-api/main.go
 
 runadmin:
-	go run app/admin/main.go	
+	go run app/sales-admin/main.go	
 
 kill:
 	lsof -t -i tcp:3000 | xargs kill
