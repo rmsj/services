@@ -4,6 +4,7 @@ package user
 import (
 	"context"
 	"database/sql"
+	"go.opentelemetry.io/otel/trace"
 	"log"
 	"time"
 
@@ -163,6 +164,9 @@ func (u User) Delete(ctx context.Context, traceID string, claims auth.Claims, us
 
 // Query retrieves a list of existing users from the database.
 func (u User) Query(ctx context.Context, traceID string, pageNumber int, rowsPerPage int) ([]Info, error) {
+
+	ctx, span := trace.SpanFromContext(ctx).Tracer().Start(ctx, "business.data.user.query")
+	defer span.End()
 
 	const q = `
 	SELECT

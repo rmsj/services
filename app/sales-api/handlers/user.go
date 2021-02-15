@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"fmt"
+	"go.opentelemetry.io/otel/trace"
 	"net/http"
 	"strconv"
 
@@ -18,6 +19,9 @@ type userGroup struct {
 }
 
 func (ug userGroup) query(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+	// context for debug and tracing
+	ctx, span := trace.SpanFromContext(ctx).Tracer().Start(ctx, "handlers.userGroup.query")
+	defer span.End()
 
 	v, ok := ctx.Value(web.KeyValues).(*web.Values)
 	if !ok {
